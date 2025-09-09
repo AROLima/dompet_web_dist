@@ -4,9 +4,9 @@ Este repositório/pasta contém **artefatos gerados** pelo comando de build do F
 
 ## Origem do Build
 - Framework: Flutter (web)
-- URL base (produção): https://dompet-api.onrender.com
+- URL base (produção): https://dompet-backend.onrender.com
 - Comando usado (produção):
-  flutter build web --release --dart-define=BASE_URL=https://dompet-api.onrender.com --dart-define=FLAVOR=prod
+  flutter build web --release --dart-define=BASE_URL=https://dompet-backend.onrender.com --dart-define=FLAVOR=prod
 - Script auxiliar: `scripts/build_web_prod.ps1`
 - Metadados: `version.txt` (BASE_URL, FLAVOR, timestamp) e `version.json`.
 

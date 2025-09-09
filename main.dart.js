@@ -8514,7 +8514,7 @@ ate:function ate(a){this.a=a},
 o7:function o7(){this.c=null
 this.a=$},
 aNW:function aNW(){},
-b3s(){var s,r,q,p="https://dompet-api.onrender.com",o=p
+b3s(){var s,r,q,p="https://dompet-backend.onrender.com",o=p
 try{s=A.cD(p,0,null)
 r=J.C0(s)==="localhost"||J.C0(s)==="127.0.0.1"}catch(q){}return new A.p4(o)},
 p4:function p4(a){this.a=a},

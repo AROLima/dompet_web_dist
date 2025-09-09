@@ -1,3 +1,0 @@
-BASE_URL=https://dompet-backend.onrender.com
-FLAVOR=prod
-BUILT_AT=2025-09-08T00:00:00Z

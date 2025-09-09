@@ -4,9 +4,11 @@ Este repositório/pasta contém **artefatos gerados** pelo comando de build do F
 
 ## Origem do Build
 - Framework: Flutter (web)
-- Comando usado (exemplo):
-  flutter build web --release
-- Commit origem (frontend app): consulte o hash registrado em `version.json` (campo `app_version` se presente) ou mantenha manualmente abaixo.
+- URL base (produção): https://dompet-api.onrender.com
+- Comando usado (produção):
+  flutter build web --release --dart-define=BASE_URL=https://dompet-api.onrender.com --dart-define=FLAVOR=prod
+- Script auxiliar: `scripts/build_web_prod.ps1`
+- Metadados: `version.txt` (BASE_URL, FLAVOR, timestamp) e `version.json`.
 
 ## Estrutura Principal
 - `index.html` – Shell da aplicação.
@@ -16,29 +18,28 @@ Este repositório/pasta contém **artefatos gerados** pelo comando de build do F
 - `assets/` – Manifests, fontes, imagens, shaders.
 - `canvaskit/` – Binários WASM para renderização (CanvasKit / Skwasm).
 - `version.json` / `.last_build_id` – Metadados do build.
+- `version.txt` – Variáveis simples (para troubleshooting rápido).
 
-## Rebuild / Atualização
+## Rebuild / Atualização (Produção)
 1. No projeto fonte Flutter:
-   flutter clean
    flutter pub get
-   flutter build web --release
-2. Substitua todo o conteúdo desta pasta pelos novos arquivos de `build/web`.
-3. Faça commit/push.
-4. (Se hospedagem estática) Invalide/limpe cache CDN se existir.
+   ./scripts/build_web_prod.ps1
+2. Substitua o conteúdo desta pasta pelos novos arquivos de `build/web` (preserve `.git` e README se for repositório separado).
+3. Commit & push.
+4. Invalide cache CDN (se houver) e force atualização do PWA (ver abaixo).
 
-## Cache & Service Worker
-- Após publicar um novo build alguns navegadores podem servir o SW antigo.
-- Para garantir atualização: abrir DevTools > Application > Unregister Service Worker e fazer hard reload.
-- Opcional: incremente manualmente `cacheName` dentro de `flutter_service_worker.js` se quiser forçar invalidação imediata.
+## Forçar atualização PWA / Cache SW
+- Usuário: abrir app, atualizar (Ctrl+Shift+R) ou nas DevTools > Application > Unregister.
+- Server-side: alterar algo em `flutter_service_worker.js` ou garantir novo hash de assets (o build já faz isso se arquivos mudarem).
+- Se trocar só BASE_URL mas assets idênticos, considere adicionar um comentário com timestamp em `index.html` para mudar hash.
 
 ## Segurança
-- Não armazene segredos (tokens, chaves) em tempo de build dentro destes arquivos; qualquer pessoa pode baixá-los.
-- Variáveis sensíveis devem ser resolvidas via backend (ex: endpoints) ou feature flags públicas.
+- Nada sensível deve ser incluído; tudo aqui é público.
+- BASE_URL pública aponta para API já protegida por autenticação JWT.
 
 ## Boas Práticas
-- Versionar um arquivo `version.txt` com o hash do commit fonte.
-- Automatizar pipeline para gerar e publicar esta pasta (CI) evitando edição manual.
-- Evitar commits de arquivos grandes obsoletos (remover antes de adicionar novos builds se usar histórico longo).
+- Automatizar deploy (CI) copiando `build/web` para hosting.
+- Adicionar cabeçalho `Cache-Control: no-cache` apenas para `index.html` (não para assets com hash) para facilitar updates.
 
 ## Licença
 Distribuição gerada da aplicação DomPet. Ver licença no repositório principal do código-fonte.

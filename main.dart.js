@@ -8516,7 +8516,7 @@ this.d=!1
 this.a=$},
 aLf:function aLf(){},
 aNY:function aNY(){},
-b3v(){var s,r,q,p="http://localhost:8080",o=p
+b3v(){var s,r,q,p="https://dompet-backend.onrender.com",o=p
 try{s=A.cD(p,0,null)
 r=J.C0(s)==="localhost"||J.C0(s)==="127.0.0.1"}catch(q){}return new A.p4(o)},
 p4:function p4(a){this.a=a},
